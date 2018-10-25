@@ -46,9 +46,7 @@ fn endpoint_boom() -> &'static str {
 
 #[post("/incr")]
 fn endpoint_incr(counter: State<Counter>) -> String {
-    let prev = counter.count.load(Ordering::Relaxed);
-    counter.count.store(prev + 1, Ordering::Relaxed);
-    format!("{}\n", counter.count.load(Ordering::Relaxed))
+    format!("{}\n", 1 + counter.count.fetch_add(1, Ordering::Relaxed))
 }
 
 fn main() {
