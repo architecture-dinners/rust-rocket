@@ -6,3 +6,9 @@ authors = ["kvey <colton@coltonpierson.com>"]
 [dependencies]
 rocket = "0.3.17"
 rocket_codegen = "0.3.17"
+log = "0.4.5"
+
+[dependencies.log4rs]
+version = "0.8.1"
+default-features = false 
+features = ["console_appender"]

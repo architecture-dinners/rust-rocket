@@ -2,10 +2,17 @@
 #![feature(custom_derive)]
 #![plugin(rocket_codegen)]
 
+#[macro_use]
+extern crate log;
+
+extern crate log4rs;
 extern crate rocket;
+
 use rocket::State;
 use rocket::response::status;
 use std::sync::atomic::{Ordering, AtomicUsize };
+
+mod logging;
 
 struct Counter {
     count: AtomicUsize
@@ -45,6 +52,8 @@ fn endpoint_incr(counter: State<Counter>) -> String {
 }
 
 fn main() {
+    logging::get_logger();
+
     rocket::ignite()
         .manage(Counter { count: AtomicUsize::new(0) })
         .mount("/", routes![
